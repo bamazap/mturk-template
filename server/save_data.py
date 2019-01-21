@@ -2,8 +2,10 @@ import json
 import boto3
 import os
 from pathlib import Path
+from pymongo import MongoClient
 
 S3_BUCKET = os.environ.get('SSS_BUCKET')
+MONGO_URI = os.environ.get('MONGO_URI')
 
 def save_locally(key, data): 
     return _save_locally('server/data/', key, data)
@@ -33,3 +35,15 @@ def save_s3(key, data):
     r = s3.Object(S3_BUCKET, key).put(Body=bytestring, ContentType='application/json')
     print(r)
     return
+
+def save_mongo(key, data): 
+    print("Saving to mongo")
+    # mongodb keeps track of ids like this
+    if not MONGO_URI: 
+        raise RuntimeError("No MongoDB URI supplied to store data!")
+    data["key"] = key
+    client = MongoClient(MONGO_URI)
+    db = client.get_default_database()
+    collection = db['data']
+    collection.insert_one(data)
+    client.close()

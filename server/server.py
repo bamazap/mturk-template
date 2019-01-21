@@ -21,13 +21,17 @@ import os
 import shutil
 import json
 import uuid
-from urllib.parse import parse_qs
+from enum import Enum
+from save_data import save_locally, save_s3, save_mongo
 
-from save_data import save_locally, save_s3 
+class SaveMethod(Enum): 
+    LOCAL = save_locally
+    S3 = save_s3
+    MONGO = save_mongo
+
+SAVE_METHOD = SaveMethod.MONGO
 COUNTER = "server/counter.txt"
 INDEX = "index.html"
-
-SAVE_LOCALLY=True
 
 def get_querystring(path): 
     pairs = {}
@@ -103,10 +107,7 @@ class S(SimpleHTTPRequestHandler):
                 data = json.loads(data)
                 print("DATA", data)
                 key = str(uuid.uuid4())
-                if SAVE_LOCALLY: 
-                    save_locally(key, data)
-                else:
-                    save_s3(key, data)
+                SAVE_METHOD(key, data)
                 print("SAVED DATA")
                 response = json.dumps({'key': key})
                 self.send_response(200)
