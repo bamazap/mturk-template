@@ -1,2 +1,6 @@
 .sass-cache
 mturk.log
+.ipynb_checkpoints
+__pycache__
+*.pyc
+*.swp

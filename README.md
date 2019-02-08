@@ -99,3 +99,6 @@ You are responsible for setting up your own data-collection infrastructure and i
 ### Screenshots
 Here's a demo of the task interface:
 ![demo](demo.gif)
+
+### Contributing
+If you make a change to `mturk/mturk.ipynb`, please run `mturk/clean.sh` before committing. This clears metadata that gets created when you run the notebook to minimize diff noise. Be sure to set the safety flags back to False as well.
