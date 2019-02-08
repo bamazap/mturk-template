@@ -7,10 +7,19 @@ var custom = {
          * 
          * returns: if config.meta.aggregate is set to false, an array of objects with length config.meta.numTasks,
          * one object for each task; else, an object that will be made available to all subtasks
-         */
-        return $.get("").then(function() {
-            return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-        });
+         */ 
+        
+        if (!config.meta.aggregate) {
+            return $.get("").then(function() {
+                return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            });
+        } else {
+            return $.get("").then(function() {
+                return {
+                    number: Math.floor(Math.random()*10 + 1) // random number between 1 and 10
+                };
+            });
+        }
     },
     showTask: function(taskInput, taskIndex, taskOutput) {
         /*
@@ -27,12 +36,33 @@ var custom = {
          * 
          * returns: None
          */
-        $(".exp-data").text("Input for task " + taskInput.toString());
-        $("#exp-input").val(taskOutput);
-        $("#exp-input").focus();
-        if (taskIndex == 1) {
-            hideIfNotAccepted();
+
+        if (!config.meta.aggregate) {
+            $(".exp-data").text("Input for task " + taskInput.toString());
+            $("#exp-input").val(taskOutput);
+            $("#exp-input").focus();
+            return;
+        } else {
+            switch (taskIndex) {
+                case 0: // Step 1: show the number 
+                    var number = taskInput.number;
+                    $(".exp-data").text("This is your number: " + number.toString());
+                    $("#exp-input").hide();
+                    break;
+                case 1: // Step 2: ask users to record the number
+                    $(".exp-data").text("Please input the number you were shown.");
+                    if (taskOutput.userResponse) {
+                        $("#exp-input").val(taskOutput.userResponse);
+                    }
+                    $("#exp-input").show().focus();
+                    break;
+                case 2:  // Step 3: thank you page
+                    $("#exp-input").hide();
+                    $(".exp-data").text("Thanks for your input!");
+                    break;
+            }
         }
+
     },
     collectData: function(taskInput, taskIndex, taskOutput) {
         /* 
@@ -52,7 +82,23 @@ var custom = {
          *   config.meta.aggregate is true, an object with key-value pairs to be merged with the
          *   taskOutput object.
          */
-        return $("#exp-input").val();
+
+        if (!config.meta.aggregate) {
+            return $("#exp-input").val();
+        } else {
+            switch (taskIndex) {
+                case 0: // show the number
+                    return {
+                        numberShown: taskInput.number
+                    };
+                case 1: // record the number
+                    return {
+                        userResponse: $("#exp-input").val()
+                    };
+                case 2: // thanks
+                    return {};
+            }
+        }
     },
     validateTask: function(taskInput, taskIndex, taskOutput) {
         /*
@@ -75,10 +121,21 @@ var custom = {
          * returns: falsey value if the data is valid; otherwise an object with a field "errorMessage"
          *    containing a string error message to display. 
          */
-        if (taskOutput.trim().length > 0) {
-            return false;
+        if (!config.meta.aggregate) {
+            if (taskOutput.trim().length > 0) {
+                return false;
+            } else {
+                return {errorMessage: "please complete the task!"};
+            }
         } else {
-            return {errorMessage: "please complete the task!"};
+            if (taskIndex == 1) { //validate user input 
+                if (parseInt(taskOutput.userResponse.trim()) == taskInput.number) {
+                    return false;
+                } else {
+                    return {errorMessage: "incorrect response; try again!"};
+                }
+            }
+            return false;
         }
     }
 };
