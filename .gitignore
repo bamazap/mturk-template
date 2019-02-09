@@ -4,3 +4,5 @@ mturk.log
 __pycache__
 *.pyc
 *.swp
+node_modules
+dist

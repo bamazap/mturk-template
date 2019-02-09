@@ -29,7 +29,7 @@
         "production": false
     },
     "advanced": {
-        "includeDemographicSurvey": false,
+        "includeDemographicSurvey": true,
         "hideIfNotAccepted": false,
         "externalSubmit": false,
         "externalSubmitUrl": ""
