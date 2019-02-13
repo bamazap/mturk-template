@@ -1,6 +1,7 @@
 import $ from 'jquery';
 
-import config from '../config.json';
+import config from '../../config.json';
+import taskHTML from './task.html';
 
 const custom = {
   /**
@@ -12,9 +13,12 @@ const custom = {
    *   else, an object that will be made available to all subtasks
    */
   loadTasks(numSubtasks) {
+    $('#custom-experiment').html(taskHTML);
+
     if (!config.meta.aggregate) {
       return Promise.resolve(new Array(numSubtasks).map((v, i) => i));
     }
+  
     return Promise.resolve({
       number: Math.floor((Math.random() * 10) + 1), // random number between 1 and 10
     });
@@ -33,7 +37,7 @@ const custom = {
    */
   showTask(taskInput, taskIndex, taskOutput) {
     if (!config.meta.aggregate) {
-      $('.exp-data').text(`Input for task ${taskInput.toString()}`);
+      $('.exp-data').text(`Input for task ${taskIndex}`);
       $('#exp-input').val(taskOutput);
       $('#exp-input').focus();
       return;
@@ -41,11 +45,11 @@ const custom = {
 
     switch (taskIndex) {
       case 0: // Step 1: show the number
-        $('.exp-data').text(`This is your number: ${taskInput.number.toString()}`);
+        $('#exp-data').text(`This is your number: ${taskInput.number.toString()}`);
         $('#exp-input').hide();
         break;
       case 1: // Step 2: ask users to record the number
-        $('.exp-data').text('Please input the number you were shown.');
+        $('#exp-data').text('Please input the number you were shown.');
         if (taskOutput.userResponse) {
           $('#exp-input').val(taskOutput.userResponse);
         }
@@ -53,7 +57,7 @@ const custom = {
         break;
       case 2: // Step 3: thank you page
         $('#exp-input').hide();
-        $('.exp-data').text('Thanks for your input!');
+        $('#exp-data').text('Thanks for your input!');
         break;
       default:
     }
@@ -74,6 +78,7 @@ const custom = {
     if (!config.meta.aggregate) {
       return $('#exp-input').val();
     }
+
     switch (taskIndex) {
       case 0: // show the number
         return {
@@ -117,6 +122,7 @@ const custom = {
       }
       return { errorMessage: 'please complete the task!' };
     }
+
     if (taskIndex === 1) { // validate user input
       if (parseInt(taskOutput.userResponse.trim(), 10) === taskInput.number) {
         return false;

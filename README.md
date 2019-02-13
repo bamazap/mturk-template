@@ -2,6 +2,9 @@
 A general-purpose template for Amazon Mechanical Turk tasks.
 
 ### Development
+
+Run `npm build` to test out the UI locally (you need `node` and `npm` installed; you need to run `npm install` the first time).
+
 Run something like `python3 -m http.server` to test out the UI locally.
 
 Jupyter notebooks in the `mturk` folder are provided for launching and monitoring HITs. Edit the `hitCreation` fields in `config.json` to define how to set up your HITs.
@@ -9,13 +12,13 @@ Jupyter notebooks in the `mturk` folder are provided for launching and monitorin
 ### UI Customization
 This framework can be used to create MTurk HITs, broken up into discrete repeated subtasks.
 
-To define your MTurk HIT, you only need to change things in three places: `index.js`, `custom.js`, and `config.json`. 
+To define your MTurk HIT, you only need to change the files in `src/task` and `custom.json`.
 
-#### `index.html`
-Find the section marked `<!-- vv CUSTOM EXPERIMENT MARKUP GOES HERE vv -->`, and add your custom HTML elements in that section (e.g. image divs, input boxes). Add `id`s to those HTML elements so you can easily refer to them with JQuery in the page's JavaScript (see `assets/js/custom.js`).
-
-#### `assets/js/custom.js`
+#### `src/task/task.js`
 Fill out the 4 functions: `loadTasks`, `showTask`, `collectData`, and `validateTask`. These define behavior for loading initial data, displaying a task, storing data from a task, and validating a task. We recommmend starting by editing: `assets/js/custom.js`. If you know `config.meta.aggregate` will be fixed then you can remove those conditions. 
+
+#### `src/task/task.html`
+The HTML you write here will get injected into `src/index.html` via the line `$('#custom-experiment').html(taskHTML);` in `src/task/task.js`.
 
 #### `config.json`
 Here, you can define your HIT's name, description, number of subtasks, instructions, etc. Keep reading for a detailed description of the fields in the config. 

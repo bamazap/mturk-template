@@ -1,101 +1,91 @@
 <!doctype html>
 
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <title>test</title>
-    <meta name="description" content="mturk task template">
-    <meta name="author" content="kimberli">
+  <meta charset="utf-8">
+  <title>test</title>
+  <meta name="description" content="mturk task template">
+  <meta name="author" content="kimberli">
 </head>
 
 <body>
-<div class="ui container">
-    <h1 id="page-title" class="meta-title ui centered dividing header"></h1>
-    <div id="instructions" class="ui top aligned centered grid">
-        <div class="row">
-            <div class="left aligned fourteen wide column">
-                <h2>Instructions</h2>
-                <p><b class="meta-desc"></b></p>
-                <p class="instructions-simple"></p>
-                <h3>Guidelines:</h3>
-                <ol class="instructions-steps">
-                </ol>
-                <div id="sample-task">
-                    <h3>Sample task:</h3>
-                    <div id="instructions-demo"></div>
-                </div>
-                <div class="ui primary button right floated instruction-button">Continue</div>
-            </div>
+  <header>
+    <h1 id="page-title" class="meta-title"></h1>
+  </header>
+
+  <main>
+    <div id="instructions">
+      <div>
+        <div>
+          <h2>Instructions</h2>
+          <p><b class="meta-desc"></b></p>
+          <p class="instructions-simple"></p>
+          <h3>Guidelines:</h3>
+          <ol class="instructions-steps">
+          </ol>
+          <div id="sample-task">
+            <h3>Sample task:</h3>
+            <div id="instructions-demo"></div>
+          </div>
+          <button class="instruction-button btn btn-primary">Continue
         </div>
+      </div>
     </div>
-    <div class="ui error message subtask" id="hit-not-accepted" style="display:none">You have not yet accepted this HIT. Please accept the HIT before you can see the rest of the task.</div>
-    <div id="succesful-submit" class="row" style="display: none; text-align:center">
-        <p class="ui header">Thank you for completing the task!</p>
-        <div style="background-color: lightgray; display: inline-block; align-items: center; padding: 20px; border-radius: 10px">
-            <p>MTurk submit code:</p>
-            <h1 class="ui header" id="submit-code"></h1>
-        </div>
+
+    <div class="subtask" id="hit-not-accepted" style="display:none">
+      You have not yet accepted this HIT. Please accept the HIT before you can see the rest of the task.
     </div>
-    <div id="experiment" class="ui top aligned centered relaxed grid">
-        <div class="row">
-            <div class="sixteen wide column">
-                <div id="progress-bar" class="ui small olive progress">
-                    <div class="bar"></div>
-                    <div class="label"></div>
-                </div>
-            </div>
-        </div>
-        <!-- vv CUSTOM EXPERIMENT MARKUP GOES HERE vv -->
-        <div class="row" id="custom-experiment">
-            <h4 class="exp-data">Input data for task</h4>
-            <div class="right aligned twelve wide column" id="exp">
-                <div class="ui input">
-                <input id="exp-input">
-                </div>
-            </div>
-        </div>
-        <!-- ^^ CUSTOM EXPERIMENT MARKUP GOES HERE ^^ -->
-        <div id="demographic-survey" class ="ui top aligned centered grid"></div>
-        <div class="middle aligned row">
-            <div class="eight wide column">
-                <div id="message-field" class="field">
-                </div>
-            </div>
-            <div class="eight wide column">
-                <div id="button-row" class="field">
-                    <div id="next-button" class="ui primary right floated button">Next</div>
-                    <div id="prev-button" class="ui primary right floated button">Prev</div>
-                    <div class="ui button right floated instruction-button">Show instructions</div>
-                </div>
-            </div>
-        </div>
-        <div class="top aligned row">
-            <div class="eight wide column"></div>
-            <div class="right aligned eight wide column">
-                <div id="final-task-fields" class="ui form">
-                    <div id="feedback-field" class="field">
-                        <label>
-                            Any comments or feedback?
-                        </label>
-                        <textarea id="feedback-input" rows="2"></textarea>
-                    </div>
-                    <div id="submit-field" class="field">
-                        <div id="submit-button" class="ui green right floated button">Submit</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="ui divider"></div>
-        <div class="row">
-            <div id="disclaimer-box" class="center aligned fourteen wide column">
-                <p class="disclaimer"></p>
-            </div>
-        </div>
-        <div class="row">
-            <form id="submit-form" name="submit-form">
-            </form>
-        </div>
+
+    <div id="succesful-submit" style="display: none; text-align:center">
+      <p>Thank you for completing the task!</p>
+      <div
+        style="background-color: lightgray; display: inline-block; align-items: center; padding: 20px; border-radius: 10px"
+      >
+        <p>MTurk submit code:</p>
+        <h1 id="submit-code"></h1>
+      </div>
     </div>
-</div>
+
+    <div id="experiment">
+      <progress id="progress-bar" value="0" max="100"></progress>
+
+      <div class="main-content">
+        <div id="custom-experiment"></div>
+        <div id="demographic-survey"></div>
+      </div>
+
+      <div class="message">
+        <div id="message-field"></div>
+      </div>
+      <div id="button-row">
+        <button type="button" class="btn" id="prev-button">Prev</button>
+        <button type="button" class="btn" id="next-button">Next</button>
+      </div>
+      <button class="instruction-button">Show instructions</button>
+    </div>
+
+    <div id="final-task-fields">
+      <div id="feedback-field">
+        <label>
+          Any comments or feedback?
+        </label>
+        <textarea id="feedback-input" rows="2"></textarea>
+      </div>
+      <div id="submit-field">
+        <button id="submit-button" class="btn btn-success">Submit</button>
+      </div>
+    </div>
+
+  </main>
+  <footer>
+    <div id="disclaimer-box">
+      <p class="disclaimer"></p>
+    </div>
+  </footer>
+
+  <form id="submit-form" name="submit-form">
+  </form>
 </body>
+
 </html>

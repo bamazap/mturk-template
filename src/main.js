@@ -1,8 +1,8 @@
 import $ from 'jquery';
 
 import config from '../config.json';
-import custom from './custom';
-import demoSurvey from './demographic-survey';
+import custom from './task/task';
+import demoSurvey from './demographic-survey/demographic-survey';
 
 const MTURK_SUBMIT = 'https://www.mturk.com/mturk/externalSubmit';
 const SANDBOX_SUBMIT = 'https://workersandbox.mturk.com/mturk/externalSubmit';
@@ -74,7 +74,7 @@ function updateTask() {
   if (config.advanced.hideIfNotAccepted && hideIfNotAccepted()) {
     return;
   }
-  $('#progress-bar').progress('set progress', state.taskIndex + 1);
+  $('#progress-bar').attr('value', state.taskIndex + 1);
   if (isDemoSurvey()) {
     demoSurvey.showTask();
   } else {
@@ -89,26 +89,26 @@ function updateTask() {
   }
   if (state.taskIndex === lastIndex) {
     // last page
-    $('#next-button').addClass('disabled');
+    $('#next-button').css('visibility', 'hidden');
     if (state.taskIndex !== 0) {
-      $('#prev-button').removeClass('disabled');
+      $('#prev-button').css('visibility', 'visible');
     } else {
-      $('#prev-button').addClass('disabled');
+      $('#prev-button').css('visibility', 'hidden');
     }
-    $('#submit-button').removeClass('disabled');
+    $('#submit-button').show();
     $('#final-task-fields').css('display', 'block');
   } else if (state.taskIndex === 0) {
     // first page
-    $('#next-button').removeClass('disabled');
-    $('#prev-button').addClass('disabled');
-    $('#submit-button').addClass('disabled');
-    $('#final-task-fields').css('display', 'none');
+    $('#next-button').css('visibility', 'visible');
+    $('#prev-button').css('visibility', 'hidden');
+    $('#submit-button').hide();
+    $('#final-task-fields').hide();
   } else {
     // intermediate page
-    $('#next-button').removeClass('disabled');
-    $('#prev-button').removeClass('disabled');
-    $('#submit-button').addClass('disabled');
-    $('#final-task-fields').css('display', 'none');
+    $('#next-button').css('visibility', 'visible');
+    $('#prev-button').css('visibility', 'visible');
+    $('#submit-button').hide();
+    $('#final-task-fields').hide();
   }
 }
 
@@ -125,9 +125,6 @@ function generateMessage(cls, header) {
 
   const newMessage = $(messageStr);
   $('#message-field').append(newMessage);
-  newMessage.click(() => {
-    newMessage.closest('.message').transition('fade');
-  });
 }
 
 function nextTask() {
@@ -320,9 +317,10 @@ function populateMetadata() {
     imgEle += `${config.instructions.images[instructionsIndex]}'></img>`;
     $('#instructions-demo').append($(imgEle));
   }
-  $('#progress-bar').progress({
-    total: config.meta.numSubtasks + config.advanced.includeDemographicSurvey,
-  });
+  $('#progress-bar').attr(
+    'max',
+    config.meta.numSubtasks + config.advanced.includeDemographicSurvey,
+  );
 }
 
 function setupButtons() {

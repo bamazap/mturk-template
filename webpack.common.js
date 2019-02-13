@@ -1,14 +1,14 @@
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const precss = require('precss');
+const autoprefixer = require('autoprefixer');
 
 const APP_NAME = 'app';
 const OUTPUT_PATH = 'dist';
 
 module.exports = {
   entry: {
-    semantic: './lib/semantic/semantic.js',
     app: './src/index.js',
   },
   output: {
@@ -21,11 +21,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: APP_NAME,
       template: 'src/index.html',
-    }),
-    // make jQuery available globally since semantic ui needs it
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
     }),
   ],
   module: {
@@ -48,6 +43,15 @@ module.exports = {
         use: [
           'style-loader',
           'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [
+                precss,
+                autoprefixer,
+              ],
+            },
+          },
           'sass-loader',
         ],
       },

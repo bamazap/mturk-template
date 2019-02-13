@@ -1,3 +1,3 @@
-import './overrides.scss';
+import './index.scss';
 
 import './main';
