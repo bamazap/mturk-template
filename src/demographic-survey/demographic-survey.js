@@ -1,5 +1,7 @@
-import $ from 'jquery';
 import surveyHTML from './demographic-survey.html';
+import './demographic-survey.scss';
+
+import $ from 'jquery';
 
 const surveyConfig = [
   {

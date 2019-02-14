@@ -1,6 +1,7 @@
-import $ from 'jquery';
-
 import mainHTML from './main.html';
+import './main.scss';
+
+import $ from 'jquery';
 import config from '../../config.json';
 import custom from '../task/task';
 import demoSurvey from '../demographic-survey/demographic-survey';

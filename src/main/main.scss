@@ -1,7 +1,7 @@
-@import '../task/task.scss';
-@import '../demographic-survey/demographic-survey.scss';
-
 .main {
+  height: 100%;
+  margin: 0 10%;
+
   #sample-task {
     display: none;
     #instructions-demo {
@@ -17,6 +17,7 @@
     text-align: center;
     border-bottom: 1px solid lightgray;
     margin-bottom: 25px;
+    padding-top: 0.05px;
   }
 
   main {
@@ -24,10 +25,11 @@
   }
 
   footer {
-    margin-top: auto;
+    width: 100%;
     border-top: 1px solid lightgray;
     text-align: center;
     font-size: 75%;
+    padding-bottom: 8px;
   }
 
   #progress-bar {

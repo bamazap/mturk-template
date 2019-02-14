@@ -1,7 +1,9 @@
-import $ from 'jquery';
-
-import config from '../../config.json';
 import taskHTML from './task.html';
+import './task.scss';
+
+import $ from 'jquery';
+import config from '../../config.json';
+
 
 const custom = {
   /**
