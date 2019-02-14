@@ -1,4 +1,6 @@
 .demographic-survey {
+  text-align: left;
+
   // inject a newline after each label element
   label::after {
     content: '\A';
@@ -10,7 +12,7 @@
   }
 
   label {
-    margin-left: 1rem;
+    margin-left: 16px;
     line-height: 150%;
   }
 

@@ -10,17 +10,17 @@ This project uses Webpack, which takes the code in `src` and "transpiles" it to 
 - Minify code to make it harder to cheat (and use less bandwidth)
 
 Thus, in order to run the app, you need `node` and `npm` installed. The first time you clone the repo, you need to run `npm install` to install dependencies. Then, simply run
-- `npm start` to run the app (go to `localhost:3000`)
-- `npm run build` to transpile the code into `dist`
+- `npm start` to run the app (`localhost:8080`)
+- `npm run build` to transpile the code into `dist` (which you can put on a server)
 
-### Linting
+### Linting & Browser Support
 This project uses `eslint` and `stylelint` to help catch potential bugs and verify that all features used are supported by the target browsers (defined in `.browserslistrc`).
 - `npm run eslint` to check JS
 - `npm run stylelint` to check CSS
-- `npm run lint` to check both (Unix only)
+- `npm run lint` to check both (Unix only).
 Your editor probably also has plugins for detecting mistakes as you write.
 
-Run something like `python3 -m http.server` in the `dist` directory to run the transpiled code, or just put it on a server.
+The template supports browsers as old as IE 9 (2011). IE 8 and below are blocked via a conditional comment in `index.html`, the effect of which is checked in `index.js`.
 
 ### HIT Management
 Jupyter notebooks in the `mturk` folder are provided for launching and monitoring HITs. Edit the `hitCreation` fields in `config.json` to define how to set up your HITs.
@@ -31,10 +31,10 @@ This framework can be used to create MTurk HITs, broken up into discrete repeate
 To define your MTurk HIT, you only need to change the files in `src/task` and `custom.json`.
 
 #### `src/task/task.js`
-Fill out the 4 functions: `loadTasks`, `showTask`, `collectData`, and `validateTask`. These define behavior for loading initial data, displaying a task, storing data from a task, and validating a task. We recommmend starting by editing: `assets/js/custom.js`. If you know `config.meta.aggregate` will be fixed then you can remove those conditions. 
+Fill out the 4 functions: `loadTasks`, `showTask`, `collectData`, and `validateTask`. These define behavior for loading initial data, displaying a task, storing data from a task, and validating a task. If you know `config.meta.aggregate` will be fixed then you can remove those conditions. 
 
-#### `src/task/task.html`
-The HTML you write here will get injected into `src/index.html` via the line `$('#custom-experiment').html(taskHTML);` in `src/task/task.js`.
+#### `src/task/task.html` and `src/task/task.scss`
+The markup and styles you write here will be injected automatically.
 
 #### `config.json`
 Here, you can define your HIT's name, description, number of subtasks, instructions, etc. Keep reading for a detailed description of the fields in the config. 

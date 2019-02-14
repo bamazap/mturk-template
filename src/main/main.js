@@ -1,8 +1,9 @@
 import $ from 'jquery';
 
-import config from '../config.json';
-import custom from './task/task';
-import demoSurvey from './demographic-survey/demographic-survey';
+import mainHTML from './main.html';
+import config from '../../config.json';
+import custom from '../task/task';
+import demoSurvey from '../demographic-survey/demographic-survey';
 
 const MTURK_SUBMIT = 'https://www.mturk.com/mturk/externalSubmit';
 const SANDBOX_SUBMIT = 'https://workersandbox.mturk.com/mturk/externalSubmit';
@@ -162,13 +163,13 @@ function prevTask() {
 
 function toggleInstructions() {
   if ($('#experiment').css('display') === 'none') {
-    $('#experiment').css('display', 'flex');
+    $('#experiment').css('display', 'block');
     $('#instructions').css('display', 'none');
     updateTask();
   } else {
     saveTaskData();
     $('#experiment').css('display', 'none');
-    $('#instructions').css('display', 'flex');
+    $('#instructions').css('display', 'block');
   }
 }
 
@@ -333,7 +334,13 @@ function setupButtons() {
   }
 }
 
-$(document).ready(() => {
+/**
+ * Insert main.html and start HIT
+ * @param {$.Element} $main
+ */
+export default function startHIT($main) {
+  $main.html(mainHTML);
+
   if (config.meta.aggregate) {
     state.taskOutputs = {};
   }
@@ -343,4 +350,4 @@ $(document).ready(() => {
     demoSurvey.maybeLoadSurvey(config);
     setupButtons(config);
   });
-});
+}
