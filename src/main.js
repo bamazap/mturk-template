@@ -59,7 +59,7 @@ function saveTaskData() {
     data = custom.collectData(
       getTaskInputs(state.taskIndex),
       state.taskIndex,
-      getTaskOutputs(state.taskIndex),
+      getTaskOutputs(state.taskIndex)
     );
   }
   if (config.meta.aggregate) {
@@ -84,7 +84,7 @@ function updateTask() {
     custom.showTask(
       getTaskInputs(state.taskIndex),
       state.taskIndex,
-      getTaskOutputs(state.taskIndex),
+      getTaskOutputs(state.taskIndex)
     );
   }
   if (state.taskIndex === lastIndex) {
@@ -138,7 +138,7 @@ function nextTask() {
       failedValidation = custom.validateTask(
         getTaskInputs(state.taskIndex),
         state.taskIndex,
-        getTaskOutputs(state.taskIndex),
+        getTaskOutputs(state.taskIndex)
       );
     }
 

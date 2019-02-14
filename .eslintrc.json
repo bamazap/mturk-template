@@ -1,0 +1,14 @@
+{
+  "env": {
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 9
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+  "rules": {
+    "object-curly-newline": ["error", { "consistent": true }]
+  }
+}

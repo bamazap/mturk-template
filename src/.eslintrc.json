@@ -1,0 +1,14 @@
+{
+  "env": {
+    "browser": true,
+    "node": false
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "plugins": ["compat"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:compat/recommended"
+  ]
+}

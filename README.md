@@ -2,7 +2,7 @@
 A general-purpose template for Amazon Mechanical Turk tasks.
 
 ### Development
-This project uses Webpack, which takes the code in `src` and "transpiles" it to a few files that will actually be run in the browser, placing it in `dist`. The reasons for doing this are numerous:
+This project uses Webpack, which takes the code in `src` and "transpiles" it to a few files that will actually be run in the browser, placing them in `dist`. The reasons for doing this are numerous:
 - Cleaner dependency management that avoids polluting the global scope
 - Use modern JavaScript syntax without worrying about browser support
 - Automatically prefix CSS styles
@@ -13,9 +13,14 @@ Thus, in order to run the app, you need `node` and `npm` installed. The first ti
 - `npm start` to run the app (go to `localhost:3000`)
 - `npm run build` to transpile the code into `dist`
 
-Node also allows us to use `eslint`, which can help prevent bugs and warn you when you use a feature that is not supported by a browser you are developing for (specified in `browserslist` in `package.json`). Simply run `npm run lint` to do this check.
+### Linting
+This project uses `eslint` and `stylelint` to help catch potential bugs and verify that all features used are supported by the target browsers (defined in `.browserslistrc`).
+- `npm run eslint` to check JS
+- `npm run stylelint` to check CSS
+- `npm run lint` to check both (Unix only)
+Your editor probably also has plugins for detecting mistakes as you write.
 
-Run something like `python3 -m http.server` in the `dist` directory to test the transpiled code.
+Run something like `python3 -m http.server` in the `dist` directory to run the transpiled code, or just put it on a server.
 
 ### HIT Management
 Jupyter notebooks in the `mturk` folder are provided for launching and monitoring HITs. Edit the `hitCreation` fields in `config.json` to define how to set up your HITs.
