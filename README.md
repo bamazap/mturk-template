@@ -20,6 +20,10 @@ This project uses `eslint` and `stylelint` to help catch potential bugs and veri
 - `npm run lint` to check both (Unix only).
 Your editor probably also has plugins for detecting mistakes as you write.
 
+If `eslint` says something is not supported, you can download a polyfill and add it to `src/polyfills.js`, and add [its id](https://github.com/amilajack/eslint-plugin-compat/wiki/Adding-polyfills) to the `polyfills` array in `src/.eslintrc.json`.
+
+Note that not all linter errors are bad. A few are being outputted for the template as-is, but it's easy to see that they aren't problematic.
+
 The template supports browsers as old as IE 9 (2011). IE 8 and below are blocked via a conditional comment in `index.html`, the effect of which is checked in `index.js`.
 
 ### HIT Management
@@ -40,7 +44,6 @@ The markup and styles you write here will be injected automatically.
 Here, you can define your HIT's name, description, number of subtasks, instructions, etc. Keep reading for a detailed description of the fields in the config. 
 
 ##### Metadata
-
 These fields are used to customize the UI template used for your task.
 
 * `meta.title` - the title of your task, displayed in the page title (string)
@@ -50,7 +53,6 @@ These fields are used to customize the UI template used for your task.
 * `meta.aggregate` - whether inputs and outputs for the task should be divided up by subtasks, or the same inputs and outputs should be stored across all subtasks. If false, outputs will be stored in an array of length `numSubtasks`; otherwise, they will be merged a single object. In general, setting this to `false` will be better if subtasks are repetitive and self-contained (for example, labeling a series of images), and this to `true` will be better if the behavior of one subtask depends on input/output from another subtask (for instance, labeling an image in one subtask and writing a description of it in the next). 
 
 ##### Instructions
-
 These fields populate the instructions for your task. 
 
 * `instructions.simple` - short instruction paragraph displayed below the task description. You can include HTML tags here! (string)
@@ -58,7 +60,6 @@ These fields populate the instructions for your task.
 * `instructions.images` - an array of URLs for demo gifs on the instruction page. One of these will be displayed randomly on each page load. (array of strings)
 
 ##### Hit Creation
-
 These fields are used by the scripts in the `mturk` folder to define how your HIT(s) will appear on MTurk.
 
 * `hitCreation.title` - the HIT's title on the MTurk worker page (string)
@@ -73,7 +74,6 @@ These fields are used by the scripts in the `mturk` folder to define how your HI
 * `hitCreation.variants` - a list of dictionaries, where each dictionary represents a variant of your HIT. For each variant, the keys of the variant are merged with the rest of the keys in the `hitCreation` section of the config to create a full config object, and one task is generated to that specification, for a total of len(variants) tasks. For instance, you could use this to create 5 HITs where each one has a different querystring. Either this or `hitCreation.numTasks` must be specified; overriden by `hitCreation.numTasks`.
 
 ##### Advanced
-
 These are advanced fields and features that will further customize your task.
 
 Config fields: 
@@ -86,11 +86,9 @@ Features:
 * use a queryword `skipto=<taskIndex>` to skip forward to the given `taskIndex`, for debugging purposes.
 
 ### MTurk HIT configuration 
-
 This framework supports two different ways of configuring your hit. 
 
 #### MTurk iframe
-
 Set `config.advanced.externalSubmit` to `false`.
 
 Your task will be displayed as an iframe within MTurk and your data will be submitted to MTurk's own back-end and stored there. You can download your collected data directly from MTurk.
@@ -100,7 +98,6 @@ Here is what your task will look like within the iframe:
 ![MTurk iframe](mturk_iframe.png)
 
 #### External link
-
 Set `config.advanced.externalSubmit` to `true`.
 
 On MTurk, your task appears as a link to your external website (specified by `config.hitCreation.taskUrl`) along with an input box for a confirmation code. MTurk workers navigate to your website and complete your task there. When they hit submit, their data is POSTed to `config.advanced.externalSubmitUrl`. This API is respnsible for returning a json object with a key called `key`. This will be displayed to the MTurk worker and they will input that key into the text box on MTurk as proof that they completed the task. You can download these keys from MTurk and use them to confirm that work was completed/approve the HITs.

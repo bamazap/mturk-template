@@ -5,9 +5,6 @@ import config from '../../config.json';
 import custom from '../task/task';
 import demoSurvey from '../demographic-survey/demographic-survey';
 
-const MTURK_SUBMIT = 'https://www.mturk.com/mturk/externalSubmit';
-const SANDBOX_SUBMIT = 'https://workersandbox.mturk.com/mturk/externalSubmit';
-
 const lastIndex = (config.meta.numSubtasks - 1) + config.advanced.includeDemographicSurvey;
 
 function gup(name) {
@@ -274,9 +271,17 @@ function mturkSubmit(submitUrl) {
 }
 
 function submitHIT() {
-  let submitUrl = config.hitCreation.production ? MTURK_SUBMIT : SANDBOX_SUBMIT;
+  let submitUrl;
   if (config.advanced.externalSubmit) {
     submitUrl = config.advanced.externalSubmitUrl;
+  } else {
+    // get prod/sandbox domain
+    const urlParams = new URLSearchParams(window.location.search);
+    let submitDomain = urlParams.get('turkSubmitTo') || 'https://www.mturk.com/';
+    if (!submitDomain.endsWith('/')) {
+      submitDomain += '/';
+    }
+    submitUrl = `${submitDomain}mturk/externalSubmit`;
   }
   saveTaskData();
   clearMessage();
@@ -336,7 +341,7 @@ function setupButtons() {
 
 /**
  * Insert main.html and start HIT
- * @param {$.Element} $main
+ * @param {JQuery<HTMLElement>} $main
  */
 export default function startHIT($main) {
   $main.html(mainHTML);

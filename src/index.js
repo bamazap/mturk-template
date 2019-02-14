@@ -1,3 +1,4 @@
+import './polyfills';
 import $ from 'jquery';
 import startHIT from './main/main';
 import './index.scss';
