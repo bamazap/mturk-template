@@ -5,10 +5,10 @@ import taskHTML from './task.html';
 
 const custom = {
   /**
-   * This function is called on page load and should implement the promise interface
+   * This function is called on page load and should implement the jQuery deferred interface
    * @param {number} numSubtasks int indicating what length array to return
    *   (how many subtasks this task should have)
-   * @return if config.meta.aggregate is set to false,
+   * @return {$.Deferred<object | object[]>} if config.meta.aggregate is set to false,
    *   an array of objects with length config.meta.numTasks, one object for each task;
    *   else, an object that will be made available to all subtasks
    */
@@ -16,12 +16,11 @@ const custom = {
     $('#custom-experiment').html(taskHTML);
 
     if (!config.meta.aggregate) {
-      return Promise.resolve(new Array(numSubtasks).map((v, i) => i));
+      return $.Deferred().resolve(new Array(numSubtasks).map((v, i) => i));
     }
-  
-    return Promise.resolve({
-      number: Math.floor((Math.random() * 10) + 1), // random number between 1 and 10
-    });
+
+    const number = Math.floor((Math.random() * 10) + 1); // random number between 1 and 10
+    return $.Deferred().resolve({ number });
   },
 
   /**
@@ -81,13 +80,9 @@ const custom = {
 
     switch (taskIndex) {
       case 0: // show the number
-        return {
-          numberShown: taskInput.number,
-        };
+        return { numberShown: taskInput.number };
       case 1: // record the number
-        return {
-          userResponse: $('#exp-input').val(),
-        };
+        return { userResponse: $('#exp-input').val() };
       case 2: // thanks
         return {};
       default:

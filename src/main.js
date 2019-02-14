@@ -201,7 +201,7 @@ function selectText(nodeID) {
     selection.removeAllRanges();
     selection.addRange(range);
   } else {
-    console.warn('Could not select text in node: Unsupported browser.');
+    // unsupported browser
   }
 }
 
@@ -337,7 +337,7 @@ $(document).ready(() => {
   if (config.meta.aggregate) {
     state.taskOutputs = {};
   }
-  custom.loadTasks(config.meta.numSubtasks).then((taskInputs) => {
+  custom.loadTasks(config.meta.numSubtasks).done((taskInputs) => {
     state.taskInputs = taskInputs;
     populateMetadata(config);
     demoSurvey.maybeLoadSurvey(config);

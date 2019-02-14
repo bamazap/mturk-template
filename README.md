@@ -2,11 +2,22 @@
 A general-purpose template for Amazon Mechanical Turk tasks.
 
 ### Development
+This project uses Webpack, which takes the code in `src` and "transpiles" it to a few files that will actually be run in the browser, placing it in `dist`. The reasons for doing this are numerous:
+- Cleaner dependency management that avoids polluting the global scope
+- Use modern JavaScript syntax without worrying about browser support
+- Automatically prefix CSS styles
+- Use SASS, a superset of CSS (with more features like variables)
+- Minify code to make it harder to cheat (and use less bandwidth)
 
-Run `npm build` to test out the UI locally (you need `node` and `npm` installed; you need to run `npm install` the first time).
+Thus, in order to run the app, you need `node` and `npm` installed. The first time you clone the repo, you need to run `npm install` to install dependencies. Then, simply run
+- `npm start` to run the app (go to `localhost:3000`)
+- `npm run build` to transpile the code into `dist`
 
-Run something like `python3 -m http.server` to test out the UI locally.
+Node also allows us to use `eslint`, which can help prevent bugs and warn you when you use a feature that is not supported by a browser you are developing for (specified in `browserslist` in `package.json`). Simply run `npm run lint` to do this check.
 
+Run something like `python3 -m http.server` in the `dist` directory to test the transpiled code.
+
+### HIT Management
 Jupyter notebooks in the `mturk` folder are provided for launching and monitoring HITs. Edit the `hitCreation` fields in `config.json` to define how to set up your HITs.
 
 ### UI Customization

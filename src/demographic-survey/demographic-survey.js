@@ -103,7 +103,7 @@ const demoSurvey = {
             $formField.append($option);
           });
         } else if (type === 'textarea') {
-          $formField.append($(`<textarea name="${name}" rows=${rows} placeholder="${placeholder}"></textarea>`))
+          $formField.append($(`<textarea name="${name}" rows=${rows} placeholder="${placeholder}"></textarea>`));
         }
         $form.append($formField);
       });
@@ -157,9 +157,7 @@ const demoSurvey = {
       feedback,
     };
 
-    return {
-      survey_data: data,
-    };
+    return { survey_data: data };
   },
 
   /**
